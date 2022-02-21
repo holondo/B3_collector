@@ -37,7 +37,9 @@ class PesquisaPregao():
     def download(self):
         url_args = ''
         for report_name in self.selected_reports:
-            url_args += self.__CLEARING_FILENAMES__[report_name.lower()].format(YYMMDD=self.selected_reports[report_name].strftime('%y%m%d'))
+            url_args += self.__CLEARING_FILENAMES__[report_name.lower()].format(
+                YYMMDD= self.selected_reports[report_name].strftime('%y%m%d')
+            )
             url_args += ','
 
         response = requests.get('http://www.b3.com.br/pesquisapregao/download?filelist=' + url_args)
