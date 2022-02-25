@@ -50,6 +50,7 @@ class PesquisaPregao():
             Params:
                 * (str) directory_path: The directory to which the reports will be download.
         """
+        saved_reports = []
         url_args = ''
         for report_name in self.selected_reports:
             url_args += self.__CLEARING_FILENAMES__[report_name.lower()].format(
@@ -64,7 +65,11 @@ class PesquisaPregao():
             for file_name in zip_1.namelist(): # Getting a zip for each requested report
                 t = zip_1.read(file_name)
                 with ZipFile(io.BytesIO(t)) as report_zip:
-                    report_zip.extractall(os.path.join(directory_path, file_name[:-4]))
+                    path_to_extract = os.path.join(directory_path, file_name[:-4])
+                    report_zip.extractall(path_to_extract)
+                    saved_reports.append(path_to_extract)
+
+        return saved_reports                    
 
 
 if __name__ == '__main__':

@@ -31,11 +31,10 @@ def update_clearing_file_names():
 def get_html() -> BeautifulSoup:
     response = requests.get('https://www.b3.com.br/pt_br/market-data-e-indices/servicos-de-dados/market-data/historico/boletins-diarios/pesquisa-por-pregao/')
     if response.status_code == 200:
-        print("======================================================")
         html_page = BeautifulSoup(response.text, 'lxml')
         return html_page
     else:
-        print("Deu ruim", response.status_code)
+        print("Could not download files, status: ", response.status_code)
     
     return None
 
@@ -60,7 +59,6 @@ def get_latest_report_updates() -> 'dict[str, datetime]':
         if report_id in id_to_report:
             reports_latest_updates[id_to_report[report_id]] = datetime.strptime(latest_update, '%d/%m/%Y')
 
-    print(reports_latest_updates)
     return reports_latest_updates
 
 
